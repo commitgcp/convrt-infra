@@ -12,7 +12,7 @@ module "postgresql" {
   // Master configurations
   tier              = var.sql.tier
   zone              = var.sql.zone
-  availability_type = "REGIONAL"
+  availability_type = var.sql.availability_type
 
   deletion_protection = true
   enable_default_db   = false

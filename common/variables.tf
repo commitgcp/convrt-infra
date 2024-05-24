@@ -1,3 +1,6 @@
+###############
+### General ###
+###############
 variable "project_id" {
   description = "GCP project ID"
 }
@@ -11,6 +14,9 @@ variable "bucket_names" {
   type        = list(string)
 }
 
+#################
+### Cloud SQL ###
+#################
 variable "sql" {
   description = "sql config"
   type = object({
@@ -20,7 +26,7 @@ variable "sql" {
     database_version  = string
     tier              = string
     zone              = string
-    availability_type = string
+    availability_type = optional(string, "REGIONAL")
     disk_size         = string
   })
 }
@@ -46,4 +52,48 @@ variable "sql_backup_configuration" {
     }))
   })
   default = {}
+}
+
+#################
+### Cloud Run ###
+#################
+variable "cr_services" {
+  type = map(object({
+    create_sa     = optional(bool, false)
+    sa_permission = optional(list(string), [])
+    elb_config = optional(object({
+      enable_cdn                      = optional(bool, false)
+      ssl                             = optional(bool, false)
+      managed_ssl_certificate_domains = optional(list(string), [])
+      https_redirect                  = optional(bool, false)
+      log_config = optional(object({
+        enable      = optional(bool, false)
+        sample_rate = optional(number, 1.0)
+      }))
+      iap_config = optional(object({
+        enable               = optional(bool, false)
+        oauth2_client_id     = optional(string)
+        oauth2_client_secret = optional(string)
+      }))
+    }))
+  }))
+}
+
+################
+### Frontend ###
+################
+variable "frontend_dev" {
+  type = object({
+    bucket_name            = string
+    backend_name           = optional(string)
+    website_main_page_file = optional(string, "index.html")
+    website_not_found_page = optional(string, "404.html")
+    cors = optional(object({
+      origin          = list(string)
+      method          = list(string)
+      response_header = list(string)
+      max_age_seconds = number
+    }), null)
+    certificates = optional(list(string), [])
+  })
 }

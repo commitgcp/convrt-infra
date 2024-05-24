@@ -1,3 +1,6 @@
+###############
+### General ###
+###############
 variable "project_id" {
   description = "GCP project ID"
 }
@@ -6,6 +9,9 @@ variable "region" {
   description = "Default GCP region"
 }
 
+#################
+### Cloud SQL ###
+#################
 variable "sql" {
   description = "sql config"
   type = object({
@@ -41,4 +47,29 @@ variable "sql_backup_configuration" {
     }))
   })
   default = {}
+}
+
+#################
+### Cloud Run ###
+#################
+variable "cr_services" {
+  type = map(object({
+    create_sa     = optional(bool, false)
+    sa_permission = optional(list(string), [])
+    elb_config = optional(object({
+      enable_cdn                      = optional(bool, false)
+      ssl                             = optional(bool, false)
+      managed_ssl_certificate_domains = optional(list(string), [])
+      https_redirect                  = optional(bool, false)
+      log_config = optional(object({
+        enable      = optional(bool, false)
+        sample_rate = optional(number, 1.0)
+      }))
+      iap_config = optional(object({
+        enable               = optional(bool, false)
+        oauth2_client_id     = optional(string)
+        oauth2_client_secret = optional(string)
+      }))
+    }))
+  }))
 }

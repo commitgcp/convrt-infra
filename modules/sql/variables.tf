@@ -22,7 +22,7 @@ variable "sql" {
     database_version  = string
     tier              = string
     zone              = string
-    availability_type = string
+    availability_type = optional(string, "REGIONAL")
     disk_size         = string
   })
 }

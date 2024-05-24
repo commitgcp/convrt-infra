@@ -2,13 +2,17 @@ project_id = "convrt-common"
 region     = "europe-west3"
 bucket_names = [
   "convrt-extension",
-  "convrt-fe-dev",
+  #"convrt-fe-dev",
   "convrt-fe-preprod",
   "convrt-fe-prod-eu",
   "convrt-media-store",
   "convrt-tg-profilepic",
   "convrt-instagram-profiles"
 ]
+
+#################
+### Cloud SQL ###
+#################
 sql = {
   engine                = "postgresql",
   instance_name         = "connectplus",
@@ -16,7 +20,7 @@ sql = {
   database_version      = "POSTGRES_15",
   tier                  = "db-custom-2-8192",
   zone                  = "europe-west3-a",
-  availability_typ_size = "100"
+  disk_size             = "100"
 }
 sql_network = {
   name               = "vpc-common",
@@ -31,4 +35,34 @@ sql_backup_configuration = {
   backup_retention_settings = {
     retained_backups = 7
   }
+}
+
+#################
+### Cloud Run ###
+#################
+cr_services = {
+  "connectplus" = {
+    create_sa = true
+    elb_config = {
+      ssl                             = false
+      managed_ssl_certificate_domains = []
+      https_redirect                  = false
+    }
+  }
+
+  "connectplus-bg" = {
+    create_sa = true
+    elb_config = {
+      ssl                             = false
+      managed_ssl_certificate_domains = []
+      https_redirect                  = false
+    }
+  }
+}
+
+################
+### Frontend ###
+################
+frontend_dev = {
+  bucket_name = "convrt-fe-dev"
 }
