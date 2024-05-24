@@ -97,3 +97,13 @@ variable "frontend_dev" {
     certificates = optional(list(string), [])
   })
 }
+
+##################
+### Gitlab WIF ###
+##################
+variable "gitlab_wif" {
+    type = object({
+        gitlab_namespace_id = string
+        gitlab_sa_permissions = list(string)
+    })
+}

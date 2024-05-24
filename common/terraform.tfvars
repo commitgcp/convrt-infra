@@ -66,3 +66,15 @@ cr_services = {
 frontend_dev = {
   bucket_name = "convrt-fe-dev"
 }
+
+##################
+### Gitlab WIF ###
+##################
+gitlab_wif = {
+  gitlab_namespace_id = "67201378"
+  gitlab_sa_permissions = [
+    "convrt-common=>roles/iam.workloadIdentityUser",
+    "convrt-common=>roles/artifactregistry.writer",
+    "convrt-common=>roles/run.developer",
+    ]
+}
