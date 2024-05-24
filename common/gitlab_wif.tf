@@ -7,3 +7,10 @@ module "gitlab_wif" {
     gitlab_sa_permissions = var.gitlab_wif.gitlab_sa_permissions
 }
 
+output "GCP_WORKLOAD_IDENTITY_PROVIDER" {
+    value = module.gitlab_wif.GCP_WORKLOAD_IDENTITY_PROVIDER 
+}
+
+output "GCP_SERVICE_ACCOUNT" {
+    value = module.gitlab_wif.GCP_SERVICE_ACCOUNT
+}

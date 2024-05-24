@@ -41,9 +41,9 @@ cr_services = {
   "convrt-api-service-dev" = {
     create_sa = true
     elb_config = {
-      ssl                             = false
-      managed_ssl_certificate_domains = []
-      https_redirect                  = false
+      ssl                             = true
+      managed_ssl_certificate_domains = ["dev-api-g.convrt.io"]
+      https_redirect                  = true
     }
   }
 }

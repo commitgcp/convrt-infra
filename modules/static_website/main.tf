@@ -41,17 +41,9 @@ resource "google_storage_bucket_iam_member" "public" {
 ### LOAD BALANCER ###
 #####################
 module "gcs-lb-cdn" {
-  source     = "./lb-gcs"
+  source     = "./lb-external"
   project_id = var.project_id
   bucket     = google_storage_bucket.website.name
   cdn        = var.cdn
   ssl        = var.ssl
-  backend_name = var.backend_name
-  http_forwarding_rule_name = var.http_forwarding_rule_name
-  http_target_proxy = var.http_target_proxy
-  http_url_map = var.http_url_map
-  https_target_proxy = var.https_target_proxy
-  https_forwarding_rule_name = var.https_forwarding_rule_name
-  https_url_map = var.https_url_map
-  load_balancing_scheme = var.load_balancing_scheme
 }

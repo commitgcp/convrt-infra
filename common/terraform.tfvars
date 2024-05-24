@@ -65,6 +65,10 @@ cr_services = {
 ################
 frontend_dev = {
   bucket_name = "convrt-fe-dev"
+  ssl = {
+    enable       = true
+    domains      = ["dev-app-g.convrt.io"]
+  }
 }
 
 ##################
@@ -76,5 +80,6 @@ gitlab_wif = {
     "convrt-common=>roles/iam.workloadIdentityUser",
     "convrt-common=>roles/artifactregistry.writer",
     "convrt-common=>roles/run.developer",
+    "convrt-common=>roles/storage.admin"
     ]
 }

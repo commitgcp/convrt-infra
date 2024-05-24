@@ -23,8 +23,5 @@ module "frontend-dev" {
     serve_while_stale = 0
     request_coalescing = true
   }
-  ssl = {
-    enable       = false #true
-    certificates = [] #var.frontend_dev.certificates
-  }
+  ssl = var.frontend_dev.ssl
 }

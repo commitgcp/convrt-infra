@@ -94,7 +94,10 @@ variable "frontend_dev" {
       response_header = list(string)
       max_age_seconds = number
     }), null)
-    certificates = optional(list(string), [])
+    ssl = object({
+      enable       = optional(bool, false)
+      domains = optional(list(string), [])
+    })
   })
 }
 

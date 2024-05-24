@@ -143,8 +143,10 @@ variable "cdn" {
 variable "ssl" {
   description = "SSL configuration"
   type = object({
-    enable       = optional(bool, false)
-    certificates = optional(list(string), [])
+    enable  = optional(bool, false)
+    cert    = optional(string)
+    key     = optional(string)
+    domains = optional(list(string), [])
   })
   default = {
     enable = false
