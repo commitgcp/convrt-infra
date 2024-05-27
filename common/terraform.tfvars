@@ -44,9 +44,9 @@ cr_services = {
   "connectplus" = {
     create_sa = true
     elb_config = {
-      ssl                             = false
-      managed_ssl_certificate_domains = []
-      https_redirect                  = false
+      ssl                             = true
+      managed_ssl_certificate_domains = ["connectplus-api-g.convrt.io"]
+      https_redirect                  = true
     }
   }
 
