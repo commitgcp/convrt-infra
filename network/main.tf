@@ -102,13 +102,13 @@ module "vpn_dev_to_mgmt" {
   name             = "vpn-dev-to-mgmt"
   router_asn       = 64513
   peer_gcp_gateway = module.vpn_mgmt_to_dev.self_link
-  #router_advertise_config = {
-  #  groups = ["ALL_SUBNETS"]
-  #ip_ranges = {
-  #  "${var.vpn_mgmt_dev.gke_control_plane_ip}" = "GKE Master Control Plane"
-  #}
-  #mode = "CUSTOM"
-  #}
+  router_advertise_config = {
+    groups = ["ALL_SUBNETS"]
+    ip_ranges = {
+      "${var.private_service_access.convrt-dev.vpc-dev}" = "Postgres SQL instance"
+    }
+    mode = "CUSTOM"
+  }
 
   tunnels = {
     remote-0 = {
@@ -184,13 +184,13 @@ module "vpn_preprod_to_mgmt" {
   name             = "vpn-preprod-to-mgmt"
   router_asn       = 64522
   peer_gcp_gateway = module.vpn_mgmt_to_preprod.self_link
-  #router_advertise_config = {
-  #  groups = ["ALL_SUBNETS"]
-  #ip_ranges = {
-  #  "${var.vpn_mgmt_dev.gke_control_plane_ip}" = "GKE Master Control Plane"
-  #}
-  #mode = "CUSTOM"
-  #}
+  router_advertise_config = {
+    groups = ["ALL_SUBNETS"]
+    ip_ranges = {
+      "${var.private_service_access.preprod-423309.vpc-preprod}" = "Postgres SQL instance"
+    }
+    mode = "CUSTOM"
+  }
 
   tunnels = {
     remote-0 = {
@@ -266,13 +266,13 @@ module "vpn_prod_to_mgmt" {
   name             = "vpn-prod-to-mgmt"
   router_asn       = 64520
   peer_gcp_gateway = module.vpn_mgmt_to_prod.self_link
-  #router_advertise_config = {
-  #  groups = ["ALL_SUBNETS"]
-  #ip_ranges = {
-  #  "${var.vpn_mgmt_prod.gke_control_plane_ip}" = "GKE Master Control Plane"
-  #}
-  #mode = "CUSTOM"
-  #}
+  router_advertise_config = {
+    groups = ["ALL_SUBNETS"]
+    ip_ranges = {
+    "${var.private_service_access.convrt-prod.vpc-prod}" = "Postgres SQL instance"
+    }
+    mode = "CUSTOM"
+  }
 
   tunnels = {
     remote-0 = {

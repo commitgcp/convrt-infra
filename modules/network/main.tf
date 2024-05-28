@@ -111,6 +111,16 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   ]
 }
 
+resource "google_compute_network_peering_routes_config" "peering_routes" {
+  for_each = var.private_service_access
+  peering  = google_service_networking_connection.private_vpc_connection[each.key].peering
+  network  = each.key
+  project       = var.project_id
+
+  import_custom_routes = true
+  export_custom_routes = true
+}
+
 ###########
 ### NAT ###
 ###########
