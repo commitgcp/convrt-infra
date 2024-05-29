@@ -11,11 +11,11 @@ sql = {
   engine            = "postgresql",
   instance_name     = "convrt-db-prod",
   db_name           = "convrt",
-  database_version  = "POSTGRES_13",
+  database_version  = "POSTGRES_14",
   tier              = "db-custom-4-16384",
   zone              = "europe-west3-a",
-  availability_type = "ZONAL",
-  disk_size         = "1000"
+  availability_type = "REGIONAL",
+  disk_size         = "400"
 }
 
 sql_network = {
@@ -28,7 +28,7 @@ sql_backup_configuration = {
   location                       = "europe-west3",
   point_in_time_recovery_enabled = true,
   transaction_log_retention_days = 7,
-  start_time                     = "08:16",
+  start_time                     = "10:26",
   backup_retention_settings = {
     retained_backups = 7
   }
@@ -41,9 +41,9 @@ cr_services = {
   "convrt-api-service-prod" = {
     create_sa = true
     elb_config = {
-      ssl                             = false #true
-      managed_ssl_certificate_domains = [] #["prod-api-g.convrt.io"]
-      https_redirect                  = false #true
+      ssl                             = true
+      managed_ssl_certificate_domains = ["api-g.convrt.io"]
+      https_redirect                  = true
     }
   }
 }
