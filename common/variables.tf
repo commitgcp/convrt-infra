@@ -101,6 +101,44 @@ variable "frontend_dev" {
   })
 }
 
+variable "frontend_preprod" {
+  type = object({
+    bucket_name            = string
+    backend_name           = optional(string)
+    website_main_page_file = optional(string, "index.html")
+    website_not_found_page = optional(string, "404.html")
+    cors = optional(object({
+      origin          = list(string)
+      method          = list(string)
+      response_header = list(string)
+      max_age_seconds = number
+    }), null)
+    ssl = object({
+      enable       = optional(bool, false)
+      domains = optional(list(string), [])
+    })
+  })
+}
+
+variable "frontend_prod" {
+  type = object({
+    bucket_name            = string
+    backend_name           = optional(string)
+    website_main_page_file = optional(string, "index.html")
+    website_not_found_page = optional(string, "404.html")
+    cors = optional(object({
+      origin          = list(string)
+      method          = list(string)
+      response_header = list(string)
+      max_age_seconds = number
+    }), null)
+    ssl = object({
+      enable       = optional(bool, false)
+      domains = optional(list(string), [])
+    })
+  })
+}
+
 ##################
 ### Gitlab WIF ###
 ##################

@@ -1,0 +1,43 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: convrt-api-service-dev
+  namespace: '323306373851'
+  labels:
+    cloud.googleapis.com/location: europe-west3
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/ingress-status: all
+spec:
+  template:
+    metadata:
+      labels:
+        client.knative.dev/nonce: 7082e74f-fdf1-4451-908e-838ab8bd09f1
+        run.googleapis.com/startupProbeType: Default
+      annotations:
+        autoscaling.knative.dev/maxScale: '100'
+        run.googleapis.com/startup-cpu-boost: 'false'
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      serviceAccountName: 323306373851-compute@developer.gserviceaccount.com
+      containers:
+      - name: hello-1
+        image: >-
+          europe-west3-docker.pkg.dev/convrt-dev/docker/express-app-dev@sha256:11aeaaf120e412497d6b2073f892c02b5b5598a7c8af33a9ab288734e0df9469
+        ports:
+        - name: http1
+          containerPort: 8080
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 8Gi
+        startupProbe:
+          timeoutSeconds: 240
+          periodSeconds: 240
+          failureThreshold: 1
+          tcpSocket:
+            port: 8080
+  traffic:
+  - percent: 100
+    latestRevision: true

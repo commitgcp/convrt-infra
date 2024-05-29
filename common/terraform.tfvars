@@ -3,8 +3,8 @@ region     = "europe-west3"
 bucket_names = [
   "convrt-extension",
   #"convrt-fe-dev",
-  "convrt-fe-preprod",
-  "convrt-fe-prod-eu",
+  #"convrt-fe-preprod",
+  #"convrt-fe-prod-eu",
   "convrt-media-store",
   "convrt-tg-profilepic",
   "convrt-instagram-profiles"
@@ -71,6 +71,21 @@ frontend_dev = {
   }
 }
 
+frontend_preprod = {
+  bucket_name = "convrt-fe-preprod"
+  ssl = {
+    enable       = false#true
+    domains      = []#["dev-app-g.convrt.io"]
+  }
+}
+
+frontend_prod = {
+  bucket_name = "convrt-fe-prod-eu"
+  ssl = {
+    enable       = false #true
+    domains      = [] #["dev-app-g.convrt.io"]
+  }
+}
 ##################
 ### Gitlab WIF ###
 ##################
