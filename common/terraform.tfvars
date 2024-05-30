@@ -74,16 +74,16 @@ frontend_dev = {
 frontend_preprod = {
   bucket_name = "convrt-fe-preprod"
   ssl = {
-    enable       = false#true
-    domains      = []#["dev-app-g.convrt.io"]
+    enable       = true
+    domains      = ["preprod-app-g.convrt.io"]
   }
 }
 
 frontend_prod = {
   bucket_name = "convrt-fe-prod-eu"
   ssl = {
-    enable       = false #true
-    domains      = [] #["dev-app-g.convrt.io"]
+    enable       = true
+    domains      = ["app-g.convrt.io"]
   }
 }
 ##################
