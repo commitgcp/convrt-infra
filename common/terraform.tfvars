@@ -67,7 +67,7 @@ frontend_dev = {
   bucket_name = "convrt-fe-dev"
   ssl = {
     enable       = true
-    domains      = ["dev-app-g.convrt.io"]
+    domains      = ["dev-app.convrt.io"]
   }
 }
 
