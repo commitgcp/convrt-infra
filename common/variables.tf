@@ -14,6 +14,22 @@ variable "bucket_names" {
   type        = list(string)
 }
 
+#######################
+### CDN for Buckets ###
+#######################
+
+variable "buckets_for_cdn" {
+  description = "List of objects containing bucket names for CDN"
+  type = list(object({
+    name = string
+    ssl = object({
+      enable       = optional(bool, false)
+      domains      = optional(list(string), [])      
+    })
+    # Add other fields here if necessary
+  }))
+}
+
 #################
 ### Cloud SQL ###
 #################

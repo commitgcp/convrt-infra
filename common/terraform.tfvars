@@ -10,6 +10,27 @@ bucket_names = [
   "convrt-instagram-profiles"
 ]
 
+#######################
+### CDN for Buckets ###
+#######################
+
+buckets_for_cdn = [
+  {
+    name = "convrt-extension",
+    ssl = {
+      enable       = false
+      domains      = []
+    }
+  },
+  {
+    name = "convrt-media-store",
+    ssl = {
+      enable       = false
+      domains      = []
+    }
+  }
+]
+
 #################
 ### Cloud SQL ###
 #################
