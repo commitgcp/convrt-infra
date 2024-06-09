@@ -66,7 +66,7 @@ cr_services = {
     create_sa = true
     elb_config = {
       ssl                             = true
-      managed_ssl_certificate_domains = ["connectplus-api-g.convrt.io"]
+      managed_ssl_certificate_domains = ["connectplus-api.convrt.io"]
       https_redirect                  = true
     }
   }
@@ -96,7 +96,7 @@ frontend_preprod = {
   bucket_name = "convrt-fe-preprod"
   ssl = {
     enable       = true
-    domains      = ["preprod-app-g.convrt.io"]
+    domains      = ["preprod-app.convrt.io", "app.convrt.ai"]
   }
 }
 
@@ -104,7 +104,7 @@ frontend_prod = {
   bucket_name = "convrt-fe-prod-eu"
   ssl = {
     enable       = true
-    domains      = ["app-g.convrt.io"]
+    domains      = ["app.convrt.io"]
   }
 }
 ##################

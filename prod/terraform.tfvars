@@ -42,7 +42,7 @@ cr_services = {
     create_sa = true
     elb_config = {
       ssl                             = true
-      managed_ssl_certificate_domains = ["api-g.convrt.io"]
+      managed_ssl_certificate_domains = ["api.convrt.io"]
       https_redirect                  = true
     }
   }

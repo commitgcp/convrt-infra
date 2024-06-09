@@ -17,6 +17,7 @@ module "lb-http" {
   ssl                             = var.elb_config.ssl
   managed_ssl_certificate_domains = var.elb_config.managed_ssl_certificate_domains
   https_redirect                  = var.elb_config.https_redirect
+
   backends = {
     default = {
       description             = null
@@ -24,7 +25,7 @@ module "lb-http" {
       custom_request_headers  = null
       custom_response_headers = null
       security_policy         = null
-
+      connection_draining_timeout_sec = 0
 
       log_config = {
         enable      = var.elb_config.log_config.enable

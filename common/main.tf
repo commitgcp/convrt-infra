@@ -46,7 +46,6 @@ module "gcs_buckets" {
 ################################
 #### Cloud Storage with CDN ####
 ################################
-
 module "buckets_with_cdn" {
   source               = "../modules/terraform-gcp-cdn-bucket"
   for_each = { for obj in var.buckets_for_cdn : obj.name => obj }
