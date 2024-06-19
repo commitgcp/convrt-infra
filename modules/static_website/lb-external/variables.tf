@@ -14,6 +14,36 @@ variable "bucket" {
   description = "Bucket to enable CDN"
 }
 
+variable "forwarding_rule_name" {
+  type        = string
+  description = "Forwarding rule name"
+}
+
+variable "forwarding_rule_name_https" {
+  type        = string
+  description = "Forwarding rule name for HTTPS"
+}
+
+variable "target_http_proxy_name" {
+  type        = string
+  description = "Target HTTP proxy name for HTTPS"
+}
+
+variable "target_https_proxy_name" {
+  type        = string
+  description = "Target HTTPs proxy name for HTTPS"
+}
+
+variable "url_map_name" {
+  type        = string
+  description = "URL map name"
+}
+
+variable "url_map_https" {
+  type        = string
+  description = "URL map name for HTTPS"
+}
+
 variable "cdn" {
   description = "CDN configuration"
   type = object({

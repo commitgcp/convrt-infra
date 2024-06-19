@@ -10,21 +10,21 @@ resource "google_compute_global_address" "lb_static_ip" {
 ### Backend ###
 ###############
 resource "google_compute_backend_bucket" "default" {
-  name        = var.backend_name == null ? "backend-${var.bucket}" : var.backend_name
-  bucket_name = var.bucket
-  enable_cdn  = var.cdn.enable
-  project     = var.project_id
-  compression_mode        = "AUTOMATIC"
+  name             = var.backend_name == null ? "backend-${var.bucket}" : var.backend_name
+  bucket_name      = var.bucket
+  enable_cdn       = var.cdn.enable
+  project          = var.project_id
+  compression_mode = "AUTOMATIC"
 
   dynamic "cdn_policy" {
     for_each = var.cdn.enable ? [var.cdn] : []
     content {
-      cache_mode        = cdn_policy.value.cache_mode
-      client_ttl        = cdn_policy.value.client_ttl
-      default_ttl       = cdn_policy.value.default_ttl
-      max_ttl           = cdn_policy.value.max_ttl
-      negative_caching  = cdn_policy.value.negative_caching
-      serve_while_stale = cdn_policy.value.serve_while_stale
+      cache_mode         = cdn_policy.value.cache_mode
+      client_ttl         = cdn_policy.value.client_ttl
+      default_ttl        = cdn_policy.value.default_ttl
+      max_ttl            = cdn_policy.value.max_ttl
+      negative_caching   = cdn_policy.value.negative_caching
+      serve_while_stale  = cdn_policy.value.serve_while_stale
       request_coalescing = cdn_policy.value.request_coalescing
     }
   }
@@ -34,23 +34,23 @@ resource "google_compute_url_map" "default" {
   count           = var.ssl.enable ? 0 : 1
   name            = var.http_url_map == null ? "http-lb-url-map-${var.bucket}" : var.http_url_map
   project         = var.project_id
-  default_service    =  google_compute_backend_bucket.default.id
+  default_service = google_compute_backend_bucket.default.id
 }
 
 resource "google_compute_url_map" "redirect" {
-  count           = var.ssl.enable ? 1 : 0
-  name            = var.http_url_map == null ? "http-lb-url-map-${var.bucket}" : var.http_url_map
-  project         = var.project_id
+  count   = var.ssl.enable ? 1 : 0
+  name    = var.http_url_map == null ? "http-lb-url-map-${var.bucket}" : var.http_url_map
+  project = var.project_id
 
   default_url_redirect {
-      https_redirect         = true
-      redirect_response_code = "MOVED_PERMANENTLY_DEFAULT" 
-      strip_query            = false
+    https_redirect         = true
+    redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+    strip_query            = false
   }
 }
 
 resource "google_compute_url_map" "https" {
-  count            = var.ssl.enable ? 1 : 0
+  count           = var.ssl.enable ? 1 : 0
   name            = var.https_url_map == null ? "https-lb-url-map-${var.bucket}" : var.https_url_map
   project         = var.project_id
   default_service = google_compute_backend_bucket.default.id

@@ -15,45 +15,45 @@ variable "bucket_name" {
 }
 
 variable "backend_name" {
-  type = string
+  type        = string
   description = "Backend name"
-  default = null
+  default     = null
 }
 
 variable "http_forwarding_rule_name" {
-  type = string
+  type        = string
   description = "HTTP forwarding rule name"
-  default = null
+  default     = null
 }
 
 variable "https_forwarding_rule_name" {
-  type = string
+  type        = string
   description = "HTTPs forwarding rule name"
-  default = null
+  default     = null
 }
 
 variable "http_target_proxy" {
-  type = string
+  type        = string
   description = "HTTP target proxy name"
-  default = null
+  default     = null
 }
 
 variable "https_target_proxy" {
-  type = string
+  type        = string
   description = "HTTPs target proxy name"
-  default = null
+  default     = null
 }
 
 variable "http_url_map" {
-  type = string
+  type        = string
   description = "HTTP URL map name"
-  default = null
+  default     = null
 }
 
 variable "https_url_map" {
-  type = string
+  type        = string
   description = "HTTPs URL map name"
-  default = null
+  default     = null
 }
 
 variable "bucket_location" {
@@ -109,9 +109,9 @@ variable "bucket_public" {
 }
 
 variable "load_balancing_scheme" {
-  type = string
+  type        = string
   description = "Load balancing scheme"
-  default = "EXTERNAL"
+  default     = "EXTERNAL"
 }
 
 ##############
@@ -123,16 +123,46 @@ variable "enable_lb" {
   default     = false
 }
 
+variable "target_http_proxy_name" {
+  type        = string
+  description = "Target HTTP proxy name"
+}
+
+variable "target_https_proxy_name" {
+  type        = string
+  description = "Target HTTPs proxy name"
+}
+
+variable "forwarding_rule_name" {
+  type        = string
+  description = "Forwarding rule name"
+}
+
+variable "forwarding_rule_name_https" {
+  type        = string
+  description = "Forwarding rule name for HTTPS"
+}
+
+variable "url_map_name" {
+  type        = string
+  description = "URL map name"
+}
+
+variable "url_map_https" {
+  type        = string
+  description = "URL map name for HTTPS"
+}
+
 variable "cdn" {
   description = "CDN configuration"
   type = object({
-    enable            = optional(bool, false)
-    cache_mode        = optional(string, "CACHE_ALL_STATIC")
-    client_ttl        = optional(number, 3600)
-    default_ttl       = optional(number, 3600)
-    max_ttl           = optional(number, 86400)
-    negative_caching  = optional(bool, true)
-    serve_while_stale = optional(number, 86400)
+    enable             = optional(bool, false)
+    cache_mode         = optional(string, "CACHE_ALL_STATIC")
+    client_ttl         = optional(number, 3600)
+    default_ttl        = optional(number, 3600)
+    max_ttl            = optional(number, 86400)
+    negative_caching   = optional(bool, true)
+    serve_while_stale  = optional(number, 86400)
     request_coalescing = optional(bool, true)
   })
   default = {

@@ -119,6 +119,7 @@ variable "elb_config" {
     ssl                             = optional(bool, false)
     managed_ssl_certificate_domains = optional(list(string), [])
     https_redirect                  = optional(bool, false)
+    connection_draining_timeout_sec = optional(number, 0)
     log_config = optional(object({
       enable      = optional(bool, false)
       sample_rate = optional(number, 1.0)

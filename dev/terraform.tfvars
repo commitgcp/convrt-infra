@@ -44,6 +44,7 @@ cr_services = {
       ssl                             = true
       managed_ssl_certificate_domains = ["dev-api.convrt.io"]
       https_redirect                  = true
+      connection_draining_timeout_sec = 300
     }
   }
 }

@@ -23,8 +23,8 @@ variable "buckets_for_cdn" {
   type = list(object({
     name = string
     ssl = object({
-      enable       = optional(bool, false)
-      domains      = optional(list(string), [])      
+      enable  = optional(bool, false)
+      domains = optional(list(string), [])
     })
     # Add other fields here if necessary
   }))
@@ -82,6 +82,7 @@ variable "cr_services" {
       ssl                             = optional(bool, false)
       managed_ssl_certificate_domains = optional(list(string), [])
       https_redirect                  = optional(bool, false)
+      connection_draining_timeout_sec = optional(number, 0)
       log_config = optional(object({
         enable      = optional(bool, false)
         sample_rate = optional(number, 1.0)
@@ -100,10 +101,16 @@ variable "cr_services" {
 ################
 variable "frontend_dev" {
   type = object({
-    bucket_name            = string
-    backend_name           = optional(string)
-    website_main_page_file = optional(string, "index.html")
-    website_not_found_page = optional(string, "404.html")
+    bucket_name                = string
+    backend_name               = optional(string)
+    website_main_page_file     = optional(string, "index.html")
+    website_not_found_page     = optional(string, "404.html")
+    forwarding_rule_name_https = string
+    forwarding_rule_name       = string
+    target_https_proxy_name    = string
+    target_http_proxy_name     = string
+    url_map_name               = string
+    url_map_https              = string
     cors = optional(object({
       origin          = list(string)
       method          = list(string)
@@ -111,7 +118,7 @@ variable "frontend_dev" {
       max_age_seconds = number
     }), null)
     ssl = object({
-      enable       = optional(bool, false)
+      enable  = optional(bool, false)
       domains = optional(list(string), [])
     })
   })
@@ -119,10 +126,16 @@ variable "frontend_dev" {
 
 variable "frontend_preprod" {
   type = object({
-    bucket_name            = string
-    backend_name           = optional(string)
-    website_main_page_file = optional(string, "index.html")
-    website_not_found_page = optional(string, "404.html")
+    bucket_name                = string
+    backend_name               = optional(string)
+    website_main_page_file     = optional(string, "index.html")
+    website_not_found_page     = optional(string, "404.html")
+    forwarding_rule_name_https = string
+    forwarding_rule_name       = string
+    target_https_proxy_name    = string
+    target_http_proxy_name     = string
+    url_map_name               = string
+    url_map_https              = string
     cors = optional(object({
       origin          = list(string)
       method          = list(string)
@@ -130,7 +143,7 @@ variable "frontend_preprod" {
       max_age_seconds = number
     }), null)
     ssl = object({
-      enable       = optional(bool, false)
+      enable  = optional(bool, false)
       domains = optional(list(string), [])
     })
   })
@@ -138,10 +151,16 @@ variable "frontend_preprod" {
 
 variable "frontend_prod" {
   type = object({
-    bucket_name            = string
-    backend_name           = optional(string)
-    website_main_page_file = optional(string, "index.html")
-    website_not_found_page = optional(string, "404.html")
+    bucket_name                = string
+    backend_name               = optional(string)
+    website_main_page_file     = optional(string, "index.html")
+    website_not_found_page     = optional(string, "404.html")
+    forwarding_rule_name_https = string
+    forwarding_rule_name       = string
+    target_https_proxy_name    = string
+    target_http_proxy_name     = string
+    url_map_name               = string
+    url_map_https              = string
     cors = optional(object({
       origin          = list(string)
       method          = list(string)
@@ -149,7 +168,7 @@ variable "frontend_prod" {
       max_age_seconds = number
     }), null)
     ssl = object({
-      enable       = optional(bool, false)
+      enable  = optional(bool, false)
       domains = optional(list(string), [])
     })
   })
@@ -159,8 +178,8 @@ variable "frontend_prod" {
 ### Gitlab WIF ###
 ##################
 variable "gitlab_wif" {
-    type = object({
-        gitlab_namespace_id = string
-        gitlab_sa_permissions = list(string)
-    })
+  type = object({
+    gitlab_namespace_id   = string
+    gitlab_sa_permissions = list(string)
+  })
 }

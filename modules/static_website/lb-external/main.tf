@@ -29,22 +29,41 @@ resource "google_compute_backend_bucket" "default" {
 }
 
 resource "google_compute_url_map" "default" {
-  name            = "http-lb-url-map-${var.bucket}"
+  name    = var.url_map_name
+  project = var.project_id
+  #default_service = google_compute_backend_bucket.default.id
+
+  default_url_redirect {
+    https_redirect         = true
+    redirect_response_code = "MOVED_PERMANENTLY_DEFAULT"
+    strip_query            = false
+  }
+
+
+  lifecycle {
+    ignore_changes = [
+      description
+    ]
+  }
+}
+
+resource "google_compute_url_map" "https" {
+  name            = var.url_map_https
   project         = var.project_id
   default_service = google_compute_backend_bucket.default.id
 }
 
 resource "google_compute_target_http_proxy" "default" {
-  name    = "http-lb-proxy-${var.bucket}"
+  name    = var.target_http_proxy_name
   project = var.project_id
   url_map = google_compute_url_map.default.id
 }
 
 resource "google_compute_target_https_proxy" "default" {
   count   = var.ssl.enable ? 1 : 0
-  name    = "https-lb-proxy-${var.bucket}"
+  name    = var.target_https_proxy_name
   project = var.project_id
-  url_map = google_compute_url_map.default.id
+  url_map = google_compute_url_map.https.id
   ssl_certificates = [
     google_compute_managed_ssl_certificate.default[0].id
   ]
@@ -54,7 +73,7 @@ resource "google_compute_target_https_proxy" "default" {
 ### Forwarding rule ###
 #######################
 resource "google_compute_global_forwarding_rule" "default" {
-  name                  = "http-lb-forwarding-rule-${var.bucket}"
+  name                  = var.forwarding_rule_name
   project               = var.project_id
   ip_protocol           = "TCP"
   load_balancing_scheme = "EXTERNAL"
@@ -65,7 +84,7 @@ resource "google_compute_global_forwarding_rule" "default" {
 
 resource "google_compute_global_forwarding_rule" "https" {
   count                 = var.ssl.enable ? 1 : 0
-  name                  = "https-lb-forwarding-rule-${var.bucket}"
+  name                  = var.forwarding_rule_name_https
   project               = var.project_id
   ip_protocol           = "TCP"
   load_balancing_scheme = "EXTERNAL"
@@ -75,10 +94,10 @@ resource "google_compute_global_forwarding_rule" "https" {
 }
 
 resource "google_compute_managed_ssl_certificate" "default" {
-  count       = var.ssl.enable && length(var.ssl.domains) > 0 ? 1 : 0
-  name        = "https-lb-cert-${var.bucket}"
-  project     = var.project_id
-  provider    = google-beta
+  count    = var.ssl.enable && length(var.ssl.domains) > 0 ? 1 : 0
+  name     = "https-lb-cert-${var.bucket}"
+  project  = var.project_id
+  provider = google-beta
   managed {
     domains = var.ssl.domains
   }

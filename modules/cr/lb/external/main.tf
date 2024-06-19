@@ -25,7 +25,7 @@ module "lb-http" {
       custom_request_headers  = null
       custom_response_headers = null
       security_policy         = null
-      connection_draining_timeout_sec = 0
+      connection_draining_timeout_sec = var.elb_config.connection_draining_timeout_sec
 
       log_config = {
         enable      = var.elb_config.log_config.enable

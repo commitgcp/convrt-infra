@@ -47,25 +47,25 @@ module "gcs_buckets" {
 #### Cloud Storage with CDN ####
 ################################
 module "buckets_with_cdn" {
-  source               = "../modules/terraform-gcp-cdn-bucket"
+  source   = "../modules/terraform-gcp-cdn-bucket"
   for_each = { for obj in var.buckets_for_cdn : obj.name => obj }
 
-  name                 = each.value.name
-  bucket_name          = each.value.name
-  project              = var.project_id
-  region               = var.region
+  name        = each.value.name
+  bucket_name = each.value.name
+  project     = var.project_id
+  region      = var.region
   ssl = {
     enable  = each.value.ssl.enable
     domains = each.value.ssl.domains
   }
   cdn = {
-    enable            = true
-    cache_mode        = "CACHE_ALL_STATIC"
-    client_ttl        = 3600
-    default_ttl       = 3600
-    max_ttl           = 86400
-    negative_caching  = false
-    serve_while_stale = 0
+    enable             = true
+    cache_mode         = "CACHE_ALL_STATIC"
+    client_ttl         = 3600
+    default_ttl        = 3600
+    max_ttl            = 86400
+    negative_caching   = false
+    serve_while_stale  = 0
     request_coalescing = true
   }
 }
